@@ -17,6 +17,7 @@ package com.example.android.asynctaskloader;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,8 +34,9 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     // TODO (1) Create a static final key to store the query's URL
-
     // TODO (2) Create a static final key to store the search's raw JSON
+    static final String QUERY_URL = "query's URL";
+    static final String SEARCH_RAW_JSON = "search's raw JSON";
 
     private EditText mSearchBoxEditText;
 
@@ -60,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
         // TODO (9) If the savedInstanceState bundle is not null, set the text of the URL and search results TextView respectively
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(QUERY_URL)) {
+                mUrlDisplayTextView.setText(savedInstanceState.getString(QUERY_URL));
+            }
+            if (savedInstanceState.containsKey(SEARCH_RAW_JSON)) {
+                mSearchResultsTextView.setText(savedInstanceState.getString(SEARCH_RAW_JSON));
+            }
+        }
     }
 
     /**
@@ -152,6 +162,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // TODO (3) Override onSaveInstanceState to persist data across Activity recreation
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        String urlDisplay = mUrlDisplayTextView.getText().toString();
+        outState.putString(QUERY_URL, urlDisplay);
+
+        String searchResults = mSearchResultsTextView.getText().toString();
+        outState.putString(SEARCH_RAW_JSON, searchResults);
+    }
+
     // Do the following steps within onSaveInstanceState
     // TODO (4) Make sure super.onSaveInstanceState is called before doing anything else
 
