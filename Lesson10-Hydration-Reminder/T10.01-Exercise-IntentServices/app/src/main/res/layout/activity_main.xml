@@ -71,7 +71,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/charging_plug_content_desc"
-            android:src="@drawable/ic_power_grey_80px" />
+            android:src="@drawable/ic_power_grey_80px"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/tv_charging_reminder_count"
