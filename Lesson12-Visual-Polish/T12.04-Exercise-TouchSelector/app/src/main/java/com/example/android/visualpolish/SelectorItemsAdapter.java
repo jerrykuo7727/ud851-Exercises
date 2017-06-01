@@ -47,6 +47,8 @@ public class SelectorItemsAdapter extends RecyclerView.Adapter<SelectorItemsAdap
      */
     final private ListItemClickListener mOnClickListener;
 
+    private int selectedPos = -1;
+
 
     /**
      * The interface that receives onClick messages.
@@ -102,6 +104,7 @@ public class SelectorItemsAdapter extends RecyclerView.Adapter<SelectorItemsAdap
      */
     @Override
     public void onBindViewHolder(ArticleViewHolder holder, int position) {
+        holder.itemView.setSelected(selectedPos == position);
         Log.d(TAG, "#" + position);
 
         //Set values if given from database - for now they are placeholders in the list_item xml,
@@ -149,8 +152,12 @@ public class SelectorItemsAdapter extends RecyclerView.Adapter<SelectorItemsAdap
          */
         @Override
         public void onClick(View v) {
+            notifyItemChanged(selectedPos);
             int clickedPosition = getAdapterPosition();
+            if (clickedPosition == selectedPos) selectedPos = -1;
+            else selectedPos = clickedPosition;
             mOnClickListener.onListItemClick(clickedPosition);
+            notifyItemChanged(selectedPos);
         }
     }
 }
